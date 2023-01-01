@@ -1,0 +1,157 @@
+
+<!-- sdjkhsdskjldhskldhslkdjhlsikjdlksjdlksjdlksjdlksjdlskjdlksjdlkdjlksdjslkdjol -->
+
+
+
+<!DOCTYPE html>
+{% load static %}
+
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="{% static 'app1/css/TodaysMenuStyle.css' %}" />
+    <link rel="stylesheet" href="{% static 'app1/css/style.css' %}" />
+</head>
+
+<form action="{% url 'payment' %}" method="post">
+    {% csrf_token %}
+<body>
+    <header>
+
+        <a href="#" class="logo"><i class="fas fa-utensils"></i>resto.</a>
+
+        <nav class="navbar">
+            <a href="{% url 'index' %}">home</a>
+            <a href="#dishes">dishes</a>
+            <a href="{% url 'menu' %}">Menu</a>
+            <a href="{% url 'cart' %}">cart</a>
+            <a href="#review">review</a>
+            <a href="#order">order</a>
+        </nav>
+
+        <div class="icons">
+            <div class="avatar">
+
+                <img class="avatar__image"
+                    src="https://images.unsplash.com/photo-1599566150163-29194dcaad36?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80" />
+                <h6>Log out</h6>
+            </div>
+        </div>
+    </header>
+    <div class="section-3">
+        <div style="margin-top: 30px; ">
+            <h3 style="font-size: 40px;" class="cart-title">Cart</h3>
+        </div>
+        <div class="cart-container">
+            {% for item in cartItems %}
+            <div  class="cart-card">
+                
+                <div class="cart-image-container">
+                    <img src="{{ item.img }}" />
+                </div>
+                <div class="cart-info">
+                    <h4 class="dish-title">{{ item.title }}</h4>
+                    <div class="cart-button-container">
+                        <div class="btn-container">
+                            <button type="button" class="decrease">-</button>
+                            <div name="quan" class="cart-value">1</div>
+                            <button type="button" class="increase">+</button>
+                            <input type="hidden" name="quanti" class="input-hidden" value="1" />
+                        </div>
+
+                        <div class="cart-price">
+                            <p>price:$</p>
+                            <span class="price">{{ item.amount }}</span>
+                            <!-- <input type="hidden" name="quant" value="1" class="input-hidden" /> -->
+                        </div>
+                    </div>
+                </div>
+                <!-- <input type="hidden" name="delete" value="{{ item.id }}"> -->
+                <a href="{% url 'delete' deleteid=item.id %}" class="delete">
+                    <span>X</span>
+                </a>
+<!-- 
+                <form action="{% url 'index' %}" method="post">
+                    {% csrf_token %}
+                    <button>Check</button>
+                </form> -->
+            </div>
+
+            {% endfor %}
+         
+
+
+            <div class="cart-total">
+
+                <h5>Total Amount: <span class="total-amount">75</span>$</h5>
+                <input type="hidden" name="total" class="cart-total-hidden" />
+
+
+            </div>
+            <button type="button" class="buy-btn">Buy Now</button>
+
+        </div>
+
+
+
+
+
+        <div class="modal-container hidden">
+            <div class="modal">
+                <h5 class="modal-title">Add Shipping Address</h5>
+                <div>
+
+                    <input type="text" name="users" class="name" placeholder="name" required />
+                </div>
+                <div>
+
+                    <input type="text" class="name" name="phonenumber" placeholder="phone number" required />
+                </div>
+                <div>
+
+                    <input type="text" class="city" name="city" placeholder="city/district/town" required />
+                </div>
+                <div>
+
+                    <input type="text" name="state" class="state" placeholder="state" required />
+                </div>
+                <div>
+
+                    <input type="text" class="pincode" name="pincode" placeholder="pincode" required />
+                </div>
+
+
+                <div>
+                    <input class="name" type="text" name="address" placeholder="address" required />
+                </div>
+
+
+                <div class="close-btn">
+                    <button type="button">X</button>
+                </div>
+                <div class="cart-info">
+                    <h4>order summary</h4>
+                    <div>
+                        <p>Order total &nbsp;&nbsp;--</p>
+                        <p class="cart-modal-total">1299</p>
+                        <input type="hidden" class="cart-modal-total-hidden" />
+                    </div>
+                </div>
+                <div class="order-btn-container">
+                    <button type="submit" class="buy-btn">Place Order</button>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+</body>
+</form>
+<script src="{% static 'app1/js/cartLogic.js' %}"></script>
+
+
+</html>

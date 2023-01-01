@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="{% static 'app1/css/TodaysMenuStyle.css' %}">
+    <link rel="stylesheet" href="{% static 'app1/css/style.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"
+        integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+
+<body>
+
+    <header>
+
+        <a href="#" class="logo"><i class="fas fa-utensils"></i>resto.</a>
+        <nav class="navbar">
+            <a href="{% url 'index' %}">home</a>
+            <a href="#dishes">dishes</a>
+            <a href="{% url 'menu' %}">Menu</a>
+            <a href="{% url 'cart' %}">cart</a>
+            <a href="#review">review</a>
+            <a href="#order">order</a>
+        </nav>
+
+        <div class="icons">
+            <i class="fas fa-bars" id="menu-bars"></i>
+            <i class="fas fa-search" id="search-icon"></i>
+            <a href="#" class="fas fa-heart"></a>
+            <a href="#" class="fas fa-shopping-cart"></a>
+        </div>
+
+    </header>
+    <div class="section-2">
+        <div class="special-dishes">
+            <div style="margin-top: 30px; ">
+                <h3 style="font-size: 40px;">Our Today's Menu</h3>
+
+            </div>
+            <div class="category-wrapper">
+                <button class="active">All</button>
+                <button>Breakfast</button>
+                <button>Lunch</button>
+                <button>Snacks</button>
+                <button>Dinner</button>
+                <button>Cold Drinks</button>
+            </div>
+            <div class="menu-wrapper">
+               
+
+
+               {% for item in food %}
+
+                <form method="post" action="{% url 'menu' %}" class="menu-card">
+                    {% csrf_token %}
+                    <div class="menu-image-container">
+                        <img src="{{ item.img.url }}" class="dish-image" alt="card" />
+                        <!-- rating data comes here -->
+                        <div class="rating-container">
+
+                            <img src="{% static 'app1/images/start.png' %}" class="rating-img" />
+                            <span>4.5</span>
+                        </div>
+                    </div>
+                    <div class="menu-details">
+                        <div class="menu-title-container">
+                            <h4 class="dish-title">{{ item.Title }}</h4>
+                            <p>{{ item.subTitle }}</p>
+                        </div>
+
+                        <article class="dish-info">{{ item.Description }}</article>
+                        <div class="pricing-container">
+                            <h5>$ {{ item.amount }}</h5>
+                            <button>Buy Now</button>
+                        </div>
+                    </div>
+                    <button name="cart" type="submit" class="cart-btn">
+                        <img src="{% static 'app1/images/shopping-cart.png' %}" />
+                        <input type="hidden" name="ids" value="{{ item.id }}">
+                        <input type="hidden" name="title" value="{{ item.Title }}">
+                        <input type="hidden" name="amount" value="{{ item.amount }}">
+                        <input type="hidden" name="img" value="{{ item.img.url }}">
+                    </button>
+                </form>
+
+                {% endfor %}
+
+            </div>
+        </div>
+
+</body>
+
+</html>

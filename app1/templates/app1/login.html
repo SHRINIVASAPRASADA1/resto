@@ -1,0 +1,50 @@
+<!-- <!DOCTYPE html>
+
+
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+</head>
+
+<body>
+    
+   <a href="">login page</a>
+</body>
+
+</html>
+ -->
+
+
+
+
+<!DOCTYPE html>
+{% load socialaccount %}
+{% load static %}
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="{% static 'app1/css/TodaysMenuStyle.css' %}">
+</head>
+
+<body>
+    <div class="login-container">
+
+        <!-- <a href="{% provider_login_url 'google' %}"></a> -->
+        <a href="{% provider_login_url 'google' %}">
+            <img src="{% static 'app1/images/google.png' %}" />
+            <h3>continue with google</h3>
+        </a>
+    </div>
+</body>
+
+</html>

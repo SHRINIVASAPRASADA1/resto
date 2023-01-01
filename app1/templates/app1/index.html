@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menu Items</title>
+
+    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
+
+    <!-- font awesome cdn link  -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+
+    <!-- custom css file link  -->
+    <link rel="stylesheet" href="{% static 'app1/css/style.css' %}">
+
+</head>
+
+<body>
+
+    <!-- header section starts      -->
+
+    <header>
+
+        <a href="#" class="logo"><i class="fas fa-utensils"></i>resto.</a>
+
+        <nav class="navbar">
+            <a href="#home">home</a>
+            <a href="#dishes">dishes</a>
+            <a href="{% url 'menu' %}">Menu</a>
+            <a href="{% url 'cart' %}">cart</a>
+            <a href="#review">review</a>
+            <a href="#order">order</a>
+        </nav>
+
+        <div class="icons">
+            <i class="fas fa-bars" id="menu-bars"></i>
+            <i class="fas fa-search" id="search-icon"></i>
+            <a href="#" class="fas fa-heart"></a>
+            <a href="#" class="fas fa-shopping-cart"></a>
+        </div>
+
+    </header>
+
+    <!-- header section ends-->
+
+    <!-- search form  -->
+
+    <form action="" id="search-form">
+        <input type="search" placeholder="search here..." name="" id="search-box">
+        <label for="search-box" class="fas fa-search"></label>
+        <i class="fas fa-times" id="close"></i>
+    </form>
+
+    <!-- home section starts  -->
+
+    <section class="home" id="home">
+
+        <div class="swiper-container home-slider">
+
+            <div class="swiper-wrapper wrapper">
+
+                {% for item in slider %}
+
+                <div class="swiper-slide slide">
+                    <div class="content">
+                        <span>our special dish</span>
+                        <h3>spicy noodles</h3>
+                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Sit natus dolor cumque?</p>
+                        <a href="{% url 'menu' %}" class="btn">order now</a>
+                    </div>
+                    <div class="image">
+                        <img src="{{ item.img.url }}" alt="">
+                    </div>
+                </div>
+
+                {% endfor %}
+
+                
+            </div>
+
+            <div class="swiper-pagination"></div>
+
+        </div>
+
+    </section>
+
+    <!-- //special dishes section -->
+    <div class="section-1" id="dishes">
+        <div class="special-dishes">
+            <div>
+                <h3>Our Best Menu</h3>
+                <p>made with premium ingrediants</p>
+            </div>
+            <div class="dish-wrapper">
+
+
+
+                {% for item in food %}
+                <a href="{% url 'menu' %}" class="dish-card">
+                    <img src="{{ item.img.url }}" class="dish-image" alt="card" />
+                    <h4 class="dish-title">{{ item.Title }}</h4>
+                    <p class="dish-info">{{ item.Description }}</p>
+                </a>
+                {% endfor %}
+                <!-- this is single special dishes card -->
+
+
+            </div>
+        </div>
+
+       
+
+
+
+        <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+
+        <!-- custom js file link  -->
+        <script src="{% static 'app1/js/script.js' %}"></script>
+
+</body>
+
+</html>
