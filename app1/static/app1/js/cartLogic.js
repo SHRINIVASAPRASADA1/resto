@@ -3,10 +3,28 @@ const increaseBtn = document.querySelectorAll('.increase');
 const decreaseBtn = document.querySelectorAll('.decrease');
 // const deleteBtn = document.querySelectorAll('.delete');
 const cartModalTotal = document.querySelector('.cart-modal-total');
+const cartModalTotalMenu = document.querySelector('.cart-modal-total-menu');
 const closeBtn = document.querySelector('.close-btn');
 const totalAmount = document.querySelector('.total-amount');
 const modalContainer = document.querySelector('.modal-container');
 const buyBtn = document.querySelector('.buy-btn');
+const buyNowBtn = document.querySelectorAll('.buy-now-btn');
+const modalMenuContainer = document.querySelector('.modal-container-menu');
+const globalInputHidden = document.querySelector('.global-hidden-input');
+
+console.log(buyNowBtn);
+
+buyNowBtn.forEach((btn) => {
+  btn.addEventListener('click', (e) => {
+    modalContainer.classList.remove('hidden');
+    let individualPrice = e.target.parentElement.children[0].innerText;
+    cartModalTotalMenu.innerHTML = individualPrice;
+    let inputHidden =
+      e.target.parentElement.parentElement.parentElement.children[0];
+    globalInputHidden.value = inputHidden.value;
+    console.log(globalInputHidden.value);
+  });
+});
 
 closeBtn.addEventListener('click', () => {
   modalContainer.classList.add('hidden');
@@ -16,19 +34,6 @@ closeBtn.addEventListener('click', () => {
 buyBtn.addEventListener('click', () => {
   modalContainer.classList.remove('hidden');
 });
-
-if (
-  document
-    .querySelector('.cart-container')
-    .children[0].classList.contains('cart-card') === false
-) {
-  document.querySelector(
-    '.cart-container'
-  ).innerHTML = `<div class="empty-cart-container">
-  <h5 class="dish-title">Cart Is Empty</h5>
-  <a href="./TodaysMenuPage.html" class="empty">Add Items</a>
-  </div>`;
-}
 
 const updateCartTotal = () => {
   let total = 0;

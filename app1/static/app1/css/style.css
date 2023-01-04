@@ -156,7 +156,6 @@ header .icons #menu-bars{
 }
 
 #search-form #search-box::-webkit-search-cancel-button{
-    
     -webkit-appearance: none;
 }
 
@@ -720,6 +719,7 @@ header .icons #menu-bars{
     border-radius: 50%;
     display: flex;
     align-items: center;
+   
 }
 .avatar__image{
     width: 35px;

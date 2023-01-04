@@ -14,85 +14,180 @@
         crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 
+
+<form method="post" action="{% url '_render_single_item_buy' %}">
+
+    {% csrf_token %}
+
 <body>
 
     <header>
 
         <a href="#" class="logo"><i class="fas fa-utensils"></i>resto.</a>
+
         <nav class="navbar">
             <a href="{% url 'index' %}">home</a>
-            <a href="#dishes">dishes</a>
+            <a href="{% url 'menu' %}">dishes</a>
             <a href="{% url 'menu' %}">Menu</a>
             <a href="{% url 'cart' %}">cart</a>
             <a href="#review">review</a>
-            <a href="#order">order</a>
+            <a href="{% url 'myorder' %}">My Orders</a>
         </nav>
 
         <div class="icons">
-            <i class="fas fa-bars" id="menu-bars"></i>
-            <i class="fas fa-search" id="search-icon"></i>
-            <a href="#" class="fas fa-heart"></a>
-            <a href="#" class="fas fa-shopping-cart"></a>
+            <div class="avatar">
+
+                <img class="avatar__image"
+                    src="https://images.unsplash.com/photo-1599566150163-29194dcaad36?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80" />
+                <h6>Log out</h6>
+            </div>
         </div>
 
     </header>
     <div class="section-2">
+        <input type="hidden" name="selected" class="global-hidden-input" />
         <div class="special-dishes">
             <div style="margin-top: 30px; ">
                 <h3 style="font-size: 40px;">Our Today's Menu</h3>
 
             </div>
             <div class="category-wrapper">
-                <button class="active">All</button>
-                <button>Breakfast</button>
-                <button>Lunch</button>
-                <button>Snacks</button>
-                <button>Dinner</button>
-                <button>Cold Drinks</button>
+                <a href="{% url 'menu' %}" class="active">All</a>
+                {% for item in catogory %}
+                   <a href="{% url 'TodaysMenuPageFilter' querry=item.title %}" >{{ item.title }}</a>
+                {% endfor %}
+    
             </div>
-            <div class="menu-wrapper">
-               
+            <div class="menu-wrapper">             
+                    {% for item in food %}
 
-
-               {% for item in food %}
-
-                <form method="post" action="{% url 'menu' %}" class="menu-card">
-                    {% csrf_token %}
-                    <div class="menu-image-container">
-                        <img src="{{ item.img.url }}" class="dish-image" alt="card" />
-                        <!-- rating data comes here -->
-                        <div class="rating-container">
-
-                            <img src="{% static 'app1/images/start.png' %}" class="rating-img" />
-                            <span>4.5</span>
+                    {% if item.available %}
+                    
+                    <div   class="menu-card">
+                        <input type="hidden" value="{{ item.id }}" class="hidden-menu-card" />
+                        
+                        <div class="menu-image-container">
+                            <img src="{{ item.img.url }}" class="dish-image" alt="card" />
+                            <!-- rating data comes here -->
+                            <div class="rating-container">
+                                <img src="{% static 'app1/images/start.png' %}" class="rating-img" />
+                                <span>{{ item.Ratting }}</span>
+                            </div>
                         </div>
+                        <div class="menu-details">
+                            <div class="menu-title-container">
+                                <h4 class="dish-title">{{ item.Title }} </h4>
+                                <p>{{ item.subTitle }}</p>
+                            </div>
+                            <article class="dish-info">{{ item.Description }}</article>
+                            <div class="pricing-container">
+                                <h5>$ {{ item.amount }}</h5>
+                                <button type="button" class="buy-now-btn">Buy Now</button>
+                            </div>
+                        </div>
+                        <a href="{% url 'addtocart' num=item.id %}" class="cart-btn">
+                            <img src="{% static 'app1/images/shopping-cart.png' %}" />
+                            <input type="hidden" id="allid" name="ids" value="{{ item.id }}">
+                            <input type="hidden" name="title" value="{{ item.Title }}">
+                            <input type="hidden" name="amount" value="{{ item.amount }}">
+                            <input type="hidden" name="img" value="{{ item.img.url }}">
+                        </a>   
+
+                         
                     </div>
-                    <div class="menu-details">
-                        <div class="menu-title-container">
-                            <h4 class="dish-title">{{ item.Title }}</h4>
-                            <p>{{ item.subTitle }}</p>
-                        </div>
 
-                        <article class="dish-info">{{ item.Description }}</article>
-                        <div class="pricing-container">
-                            <h5>$ {{ item.amount }}</h5>
-                            <button>Buy Now</button>
+                    {% else %}
+
+                    <div class="menu-card not-available">
+                        <input type="hidden" value="{{ item.id }}" class="hidden-menu-card" />
+                        <div class="menu-image-container">
+                            <img src="{{ item.img.url }}" class="dish-image" alt="card" />
+                            <!-- rating data comes here -->
+                            <div class="rating-container">
+    
+                                <img src="{% static 'app1/images/start.png' %}" class="rating-img" />
+                                <span>{{ item.Ratting }}</span>
+                            </div>
                         </div>
+                        <div class="menu-details">
+                            <div class="menu-title-container">
+                                <h4 class="dish-title">{{ item.Title }} </h4>
+                                <p>{{ item.subTitle }}</p>
+                            </div>
+    
+                            <article class="dish-info">{{ item.Description }}</article>
+                            <div class="pricing-container">
+                                <h5>$ {{ item.amount }}</h5>
+                                <button class="buy-now-btn">Buy Now</button>
+                            </div>
+                        </div>
+                        <button class="cart-btn">
+                            <img src="{% static 'app1/images/shopping-cart.png' %}" />
+                        </button>
+                        <div class="disabled-text">Not available</div>
                     </div>
-                    <button name="cart" type="submit" class="cart-btn">
-                        <img src="{% static 'app1/images/shopping-cart.png' %}" />
-                        <input type="hidden" name="ids" value="{{ item.id }}">
-                        <input type="hidden" name="title" value="{{ item.Title }}">
-                        <input type="hidden" name="amount" value="{{ item.amount }}">
-                        <input type="hidden" name="img" value="{{ item.img.url }}">
-                    </button>
-                </form>
+
+                    {% endif %}
+
+
 
                 {% endfor %}
+        
+           
+
+
+            <input type="hidden" id="clicked" name="ids">
 
             </div>
-        </div>
+            <div class="modal-container hidden">
+                <div class="modal">
+                    <h5 class="modal-title">Add Shipping Address</h5>
+                    <div>
+
+                        <input type="text" class="name" name="username" placeholder="name" />
+                    </div>
+                    <div>
+
+                        <input type="text" class="name" name="numbers" name="phone number" placeholder="phone number" />
+                    </div>
+                    <div>
+
+                        <input type="text" class="name" name="city" placeholder="city/district/town" />
+                    </div>
+                    <div>
+
+                        <input type="text" class="state" name="state" placeholder="state" />
+                    </div>
+                    <div>
+
+                        <input type="text" class="name" name="pincode" placeholder="pincode" />
+                    </div>
+
+
+                    <div>
+                        <input class="name" type="text" name="address" placeholder="address" />
+                    </div>
+
+
+                    <div class="close-btn">
+                        <button type="button">X</button>
+                    </div>
+                    <div class="cart-info">
+                        <h4>order summary</h4>
+                        <div>
+                            <p>Order total &nbsp;&nbsp;--</p>
+                            <p class="cart-modal-total-menu">1299</p>
+                            <input type="hidden" class="cart-modal-total-hidden-menu" />
+                        </div>
+                    </div>
+                    <div class="order-btn-container">
+                        <button type="submit" class="buy-btn">Place Order</button>
+                    </div>
+                </div>
+            </div>
+            <script src="{% static 'app1/js/cartLogic.js' %}"></script>
 
 </body>
 
+</form>
 </html>

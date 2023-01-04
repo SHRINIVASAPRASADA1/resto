@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+
+{% load static %}
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="{% static 'app1/css/TodaysMenuStyle.css' %}" />
+    <link rel="stylesheet" href="{% static 'app1/css/style.css' %}" />
+</head>
+
+<body>
+    <header>
+
+        <a href="#" class="logo">Foody</a>
+
+        <nav class="navbar">
+            <a href="{% url 'index' %}">home</a>
+            <a href="{% url 'menu' %}">dishes</a>
+            <a href="{% url 'menu' %}">Menu</a>
+            <a href="{% url 'cart' %}">cart</a>
+            <a href="#review">review</a>
+            <a href="{% url 'myorder' %}">My Orders</a>
+        </nav>
+
+        <div class="icons">
+            <div class="avatar">
+
+                <img class="avatar__image"
+                    src="https://images.unsplash.com/photo-1599566150163-29194dcaad36?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80" />
+                <h6>Log out</h6>
+            </div>
+        </div>
+
+    </header>
+    <section class="section-3">
+        <div style="margin-top: 30px; ">
+            <h3 style="font-size: 40px;" class="cart-title">My Orders</h3>
+        </div>
+        <div class="orders-container">
+
+            {% for item in order %}
+            <div class="order">
+                <div class="order-image-wrapper myorder-wrapper">
+                    <img src="{{ item.img }}" />
+                </div>
+                <div class="myorder-wrapper">
+                    <h3 class="myorders-title">{{ item.title }}</h3>
+                </div>
+                <div class="myorder-wrapper">
+                    <p>1</p>
+
+                </div class="myorder-wrapper">
+                <div>
+                    <a href="{% url 'deleteorder' num=item.id %}" class="myorders-btn">cancel order</a>
+                </div>
+
+            </div>
+
+            {% endfor %}
+        </div>
+    </section>
+</body>
+
+</html>

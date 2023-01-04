@@ -27,20 +27,34 @@
         <a href="#" class="logo"><i class="fas fa-utensils"></i>resto.</a>
 
         <nav class="navbar">
-            <a href="#home">home</a>
-            <a href="#dishes">dishes</a>
+            <a href="{% url 'index' %}">home</a>
+            <a href="{% url 'menu' %}">dishes</a>
             <a href="{% url 'menu' %}">Menu</a>
             <a href="{% url 'cart' %}">cart</a>
             <a href="#review">review</a>
-            <a href="#order">order</a>
+            <a href="{% url 'myorder' %}">My Orders</a>
         </nav>
 
-        <div class="icons">
-            <i class="fas fa-bars" id="menu-bars"></i>
-            <i class="fas fa-search" id="search-icon"></i>
-            <a href="#" class="fas fa-heart"></a>
-            <a href="#" class="fas fa-shopping-cart"></a>
-        </div>
+        {% if user.is_authenticated %}
+        <a href="{% url 'logout' %}" class="icons">
+            <div class="avatar">
+                <img class="avatar__image"
+                    src="https://images.unsplash.com/photo-1599566150163-29194dcaad36?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80" />
+                <h6>Log out</h6>
+            </div>
+        </a>
+        {% else %}
+
+        <a href="{% url 'auth' %}" class="icons">
+            <div class="avatar">
+
+                <img class="avatar__image"
+                    src="https://images.unsplash.com/photo-1599566150163-29194dcaad36?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80" />
+                <h6>Log In</h6>
+            </div>
+        </a>
+
+        {% endif %}
 
     </header>
 

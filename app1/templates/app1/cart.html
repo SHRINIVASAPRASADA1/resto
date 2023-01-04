@@ -26,11 +26,11 @@
 
         <nav class="navbar">
             <a href="{% url 'index' %}">home</a>
-            <a href="#dishes">dishes</a>
+            <a href="{% url 'menu' %}">dishes</a>
             <a href="{% url 'menu' %}">Menu</a>
             <a href="{% url 'cart' %}">cart</a>
             <a href="#review">review</a>
-            <a href="#order">order</a>
+            <a href="{% url 'myorder' %}">My Orders</a>
         </nav>
 
         <div class="icons">
@@ -120,7 +120,6 @@
                     <input type="text" name="state" class="state" placeholder="state" required />
                 </div>
                 <div>
-
                     <input type="text" class="pincode" name="pincode" placeholder="pincode" required />
                 </div>
 

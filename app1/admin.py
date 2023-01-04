@@ -4,7 +4,7 @@ from .models import *
 # Register your models here.
 @admin.register(BestMenu)
 class ContentsForBlog(admin.ModelAdmin):
-    list_display = ('id', 'Title', 'amount', 'Date')
+    list_display = ('id', 'Title', 'amount', 'Date','available')
 
 
 @admin.register(CarouselSlider)
@@ -19,4 +19,9 @@ class AddToCartAdmin(admin.ModelAdmin):
 @admin.register(BuyNow)
 class BuyNowAdmin(admin.ModelAdmin):
     list_display = ('product_id', 'users', 'phonenumber', 'quant')
+
+
+@admin.register(catogory)
+class catogoryAdmin(admin.ModelAdmin):
+    list_display = ('id', 'title')
 
